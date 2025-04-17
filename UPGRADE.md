@@ -120,6 +120,7 @@ Each table column has its own class in the `Yiisoft\Db\Schema\Column` namespace 
 - `QueryInterface::resultCallback()` - allows to use a callback, to be called on all rows of the query result;
 - `QueryInterface::getResultCallback()` - returns the callback to be called on all rows of the query result or 
   `null` if the callback is not set;
+- `QueryPartsInterface::setWhere()` - overwrites the `WHERE` part of the query;
 - `ConnectionInterface::getColumnFactory()` - returns the column factory object for concrete DBMS;
 - `ConnectionInterface::getServerInfo()` - returns `ServerInfoInterface` instance which provides server information;
 - `QueryBuilderInterface::buildColumnDefinition()` - builds column definition for `CREATE TABLE` statement;
@@ -155,6 +156,8 @@ Each table column has its own class in the `Yiisoft\Db\Schema\Column` namespace 
 - `DbStringHelper::pascalCaseToId()`;
 - `AbstractDQLQueryBuilder::hasLimit()` - use `$limit !== null` instead;
 - `AbstractDQLQueryBuilder::hasOffset()` - use `!empty($offset)` instead;
+- `BatchQueryResultInterface::reset()` - use `BatchQueryResultInterface::rewind()` instead;
+- `BatchQueryResult::reset()` - use `BatchQueryResult::rewind()` instead;
 
 ### Remove deprecated parameters
 
@@ -190,3 +193,17 @@ Each table column has its own class in the `Yiisoft\Db\Schema\Column` namespace 
 - Rename `QueryBuilderInterface::quoter()` method to `QueryBuilderInterface::getQuoter()`;
 - Change constructor parameters in `AbstractQueryBuilder` class;
 - Remove nullable from `PdoConnectionInterface::getActivePdo()` result;
+- Move `Yiisoft\Db\Query\Data\DataReaderInterface` interface to `Yiisoft\Db\Query` namespace;
+- Move `Yiisoft\Db\Query\Data\DataReader` class to `Yiisoft\Db\Driver\Pdo` namespace and rename it to `PdoDataReader`;
+- Add `indexBy()` and `resultCallback()` methods to `DataReaderInterface` and `PdoDataReader` class;
+- Change return type of `DataReaderInterface::key()` method to `int|string|null`;
+- Change return type of `DataReaderInterface::current()` method to `array|object|false`;
+- Change `PdoDataReader` a constructor parameter;
+- Remove the second parameter `$each` from `ConnectionInterface::createBatchQueryResult()`
+  and `AbstractConnection::createBatchQueryResult()` methods;
+- Rename `setPopulatedMethod()` to `resultCallback()` in `BatchQueryResultInterface` and `BatchQueryResult` class;
+- Change return type of `key()` method to `int` in `BatchQueryResultInterface` and `BatchQueryResult` class;
+- Change return type of `current()` method to `array` in `BatchQueryResultInterface` and `BatchQueryResult` class;
+- Remove `null` from return type of `getQuery()` method in `BatchQueryResultInterface` and `BatchQueryResult` class;
+- Remove parameters from `each()` method in `QueryInterface` and `Query` class;
+- Change return type of `each()` method to `DataReaderInterface` in `QueryInterface` and `Query` class;
